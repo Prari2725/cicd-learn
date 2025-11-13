@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+D:\git repos\cicd learn\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1476315248.index
+2649473849.index
+1234394073.index
+723525879.index
+2132597300.index
+636490449.index
