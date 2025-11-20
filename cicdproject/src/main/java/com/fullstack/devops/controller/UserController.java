@@ -3,9 +3,8 @@ package com.fullstack.devops.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,9 +15,8 @@ import com.fullstack.devops.exception.RecordNotFoundException;
 import com.fullstack.devops.model.User;
 import com.fullstack.devops.repository.UserRepository;
 
-//@CrossOrigin(origins = "http://localhost:4200")
-//@RestController
-@Controller
+
+@RestController
 @RequestMapping("/api")
 public class UserController {
 
