@@ -3,8 +3,9 @@ package com.fullstack.devops.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.web.bind.annotation.RestController;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;   // <-- FIXED
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +16,7 @@ import com.fullstack.devops.exception.RecordNotFoundException;
 import com.fullstack.devops.model.User;
 import com.fullstack.devops.repository.UserRepository;
 
-
-@RestController
+@Controller                          // <-- FIXED
 @RequestMapping("/api")
 public class UserController {
 
@@ -25,47 +25,51 @@ public class UserController {
 
 	@GetMapping("/users")
 	public String getAllUsers(Model model) {
-		System.out.println("Get all Users...");
-
 		List<User> list = new ArrayList<>();
 		repository.findAll().forEach(list::add);
-		System.out.println(list);
 		model.addAttribute("users", list);
-		return "list-users";
+		return "list-users";         // <-- HTML page
 	}
 	
-	@GetMapping(path = { "/user/add" })
+	@GetMapping("/user/add")
 	public String addUser(Model model) {
 		model.addAttribute("user", new User());
-		return "add-user";
+		return "add-user";          // <-- HTML page
 	}
 
-	@PostMapping(path = "/user/create")
-	public String createUser( User user) {
-		user = repository.save(user);
+	@PostMapping("/user/create")
+	public String createUser(User user) {
+		repository.save(user);
 		return "redirect:/api/users";
 	}
 	
-	@GetMapping(path = { "/user/update/{id}" })
-	public String editEmployeeById(Model model, @PathVariable("id") Long id) throws RecordNotFoundException {
+	@GetMapping("/user/update/{id}")
+	public String editEmployeeById(Model model, @PathVariable("id") Long id)
+			throws RecordNotFoundException {
+
 		Optional<User> user = repository.findById(id);
-		model.addAttribute("user", user);
+		if (!user.isPresent()) {
+			throw new RecordNotFoundException("User not found");
+		}
+
+		model.addAttribute("user", user.get());
 		return "update-user";
 	}
 	
-	@PostMapping(path = "/user/update")
-	public String updateUser( User user) {
-		user = repository.save(user);
+	@PostMapping("/user/update")
+	public String updateUser(User user) {
+		repository.save(user);
 		return "redirect:/api/users";
 	}
 
-	@GetMapping(path = "/user/delete/{id}")
-	public String deleteUserById(Model model, @PathVariable("id") Long id) throws RecordNotFoundException {
+	@GetMapping("/user/delete/{id}")
+	public String deleteUserById(@PathVariable("id") Long id) {
 		repository.deleteById(id);
 		return "redirect:/api/users";
 	}
-	@GetMapping(path = "/user/deleteall")
-	public String deleteAllUsers() throws RecordNotFoundException {
+
+	@GetMapping("/user/deleteall")
+	public String deleteAllUsers() {
 		repository.deleteAll();
 		return "redirect:/api/users";
 	}
