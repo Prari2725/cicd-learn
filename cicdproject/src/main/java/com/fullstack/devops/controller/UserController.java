@@ -40,7 +40,7 @@ public class UserController {
 	@PostMapping("/user/create")
 	public String createUser(User user) {
 		repository.save(user);
-		return "redirect:/api/users";
+		return "redirect:/devops-0.0.1-SNAPSHOT/api/users";
 	}
 
 	@GetMapping("/user/update/{id}")
@@ -60,19 +60,19 @@ public class UserController {
 	@PostMapping("/user/update")
 	public String updateUser(User user) {
 		repository.save(user);
-		return "redirect:/api/users";
+		return "redirect:/devops-0.0.1-SNAPSHOT/api/users";
 	}
 
-	@GetMapping("/user/delete/{id}")
+	@GetMapping("/devops-0.0.1-SNAPSHOT/user/delete/{id}")
 	public String deleteUserById(@PathVariable("id") Long id) {
 		repository.deleteById(id);
-		return "redirect:/api/users";
+		return "redirect:/devops-0.0.1-SNAPSHOT/api/users";
 	}
 
 	// FIXED — supports both /deleteall and /deleteall/
-	@GetMapping(value = {"/user/deleteall", "/user/deleteall/"}, produces = "text/html")
+	@GetMapping(value = {"/devops-0.0.1-SNAPSHOT/user/deleteall", "/devops-0.0.1-SNAPSHOT/user/deleteall/"}, produces = "text/html")
 	public String deleteAllUsers() {
 		repository.deleteAll();
-		return "redirect:/api/users";
+		return "redirect:/devops-0.0.1-SNAPSHOT/api/users";
 	}
 }
